@@ -1,4 +1,6 @@
-const canvas =document.getElementById('canvas');
+const canvas = document.getElementById('canvas');
+const increaseBtn = document.getElementById('increase');
+const decreaseBtn = document.getElementById('decrease');
 const ctx = canvas.getContext('2d');
 
 let size = 30;
@@ -29,9 +31,16 @@ function drawCircle(x,y){
     ctx.fill();
 }
 
-// function draw(){
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     requestAnimationFrame(draw);
-// }
+increaseBtn.addEventListener('click',()=>{
+    size +=5;
+    if (size>50){
+        size=50;
+    }
+});
 
-// draw();
+decreaseBtn.addEventListener('click',()=>{
+    size -=5;
+    if (size<5){
+        size=5;
+    }
+});
