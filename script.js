@@ -1,9 +1,10 @@
 const canvas = document.getElementById('canvas');
 const increaseBtn = document.getElementById('increase');
 const decreaseBtn = document.getElementById('decrease');
+const sizeElem = document.getElementById('size');
 const ctx = canvas.getContext('2d');
 
-let size = 30;
+let size = 10;
 let isPressed=false;
 
 //this just sees if the mouse is pressed 
@@ -36,6 +37,7 @@ increaseBtn.addEventListener('click',()=>{
     if (size>50){
         size=50;
     }
+    updateBrushSize();
 });
 
 decreaseBtn.addEventListener('click',()=>{
@@ -43,4 +45,9 @@ decreaseBtn.addEventListener('click',()=>{
     if (size<5){
         size=5;
     }
+    updateBrushSize();
 });
+
+function updateBrushSize(){
+    sizeElem.innerText = size;
+}
