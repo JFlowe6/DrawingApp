@@ -1,3 +1,4 @@
+//variables
 const canvas = document.getElementById('canvas');
 const increaseBtn = document.getElementById('increase');
 const decreaseBtn = document.getElementById('decrease');
@@ -6,7 +7,7 @@ const sizeElem = document.getElementById('size');
 const colorElem = document.getElementById('color');
 const ctx = canvas.getContext('2d');
 
-//sets the elements/variables to preliminary states
+//sets the variables to preliminary states
 let size = 10;
 let isPressed=false;
 let color='black';
@@ -20,8 +21,13 @@ canvas.addEventListener('mousedown', (e)=>{
 
     x = e.offsetX;
     y = e.offsetY;
+
+    //This is done so that if the mouse is pressed down and doesn't move 
+    //there will still be a dot/circle placed there
+    drawCircle(x, y);
 });
 
+//resets the x and y values when mouse not pressed down
 canvas.addEventListener('mouseup', (e)=>{
     isPressed = false;
 
@@ -29,6 +35,7 @@ canvas.addEventListener('mouseup', (e)=>{
     y = undefined;
 });
 
+//fills in the space between two points making it seem like a line has been drawn
 canvas.addEventListener('mousemove', (e)=>{
     if(isPressed){
         const x2 = e.offsetX;
@@ -57,6 +64,7 @@ function drawLine(x1, y1, x2, y2){
     ctx.stroke();
 }
 
+//increases size of 'brush'
 increaseBtn.addEventListener('click',()=>{
     size +=2.5;
     if (size>50){
@@ -65,6 +73,7 @@ increaseBtn.addEventListener('click',()=>{
     updateBrushSize();
 });
 
+//decreases size
 decreaseBtn.addEventListener('click',()=>{
     size -=2.5;
     if (size<5){
@@ -73,6 +82,7 @@ decreaseBtn.addEventListener('click',()=>{
     updateBrushSize();
 });
 
+//clears the canvas
 clearBtn.addEventListener('click', ()=>{
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
