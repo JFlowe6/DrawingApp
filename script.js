@@ -27,6 +27,14 @@ canvas.addEventListener('mousedown', (e)=>{
     drawCircle(x, y);
 });
 
+canvas.addEventListener('ontouchend', (e)=>{
+    isPressed = true;
+
+    x = e.offsetX;
+    y = e.offsetY;
+    drawCircle(x, y);
+});
+
 //resets the x and y values when mouse not pressed down
 canvas.addEventListener('mouseup', (e)=>{
     isPressed = false;
@@ -35,8 +43,27 @@ canvas.addEventListener('mouseup', (e)=>{
     y = undefined;
 });
 
+canvas.addEventListener('ontouchstart', (e)=>{
+    isPressed = false;
+
+    x = undefined;
+    y = undefined;
+});
+
 //fills in the space between two points making it seem like a line has been drawn
 canvas.addEventListener('mousemove', (e)=>{
+    if(isPressed){
+        const x2 = e.offsetX;
+        const y2 = e.offsetY;
+
+        drawCircle(x2, y2);
+        drawLine(x, y, x2, y2);
+        x = x2;
+        y = y2;
+    }
+});
+
+canvas.addEventListener('ontouchmove', (e)=>{
     if(isPressed){
         const x2 = e.offsetX;
         const y2 = e.offsetY;
