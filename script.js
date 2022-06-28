@@ -18,9 +18,10 @@ let y = undefined;
 //which will then cause drawing to be displayed
 canvas.addEventListener('mousedown', (e)=>{
     isPressed = true;
+    var scale = elementScale(canvas);
 
-    x = e.offsetX;
-    y = e.offsetY;
+    x = e.offsetX * scale;
+    y = e.offsetY * scale;
 
     //This is done so that if the mouse is pressed down and doesn't move 
     //there will still be a dot/circle placed there
@@ -29,9 +30,10 @@ canvas.addEventListener('mousedown', (e)=>{
 
 canvas.addEventListener('ontouchend', (e)=>{
     isPressed = true;
+    var scale = elementScale(canvas);
 
-    x = e.offsetX;
-    y = e.offsetY;
+    x = e.offsetX * scale;
+    y = e.offsetY * scale;
     drawCircle(x, y);
 });
 
@@ -53,8 +55,9 @@ canvas.addEventListener('ontouchstart', (e)=>{
 //fills in the space between two points making it seem like a line has been drawn
 canvas.addEventListener('mousemove', (e)=>{
     if(isPressed){
-        const x2 = e.offsetX;
-        const y2 = e.offsetY;
+        var scale = elementScale(canvas);
+        const x2 = e.offsetX * scale;
+        const y2 = e.offsetY * scale;
 
         drawCircle(x2, y2);
         drawLine(x, y, x2, y2);
@@ -65,8 +68,9 @@ canvas.addEventListener('mousemove', (e)=>{
 
 canvas.addEventListener('ontouchmove', (e)=>{
     if(isPressed){
-        const x2 = e.offsetX;
-        const y2 = e.offsetY;
+        var scale = elementScale(canvas);
+        const x2 = e.offsetX * scale;
+        const y2 = e.offsetY * scale;
 
         drawCircle(x2, y2);
         drawLine(x, y, x2, y2);
@@ -120,4 +124,8 @@ colorElem.addEventListener('change',(e)=>{
 
 function updateBrushSize(){
     sizeElem.innerText = size;
+}
+
+function elementScale(canvas) {
+    return canvas.offsetWidth === 0 ? 0 : (canvas.width / canvas.offsetWidth);
 }
