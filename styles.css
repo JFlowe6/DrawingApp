@@ -13,7 +13,7 @@ body{
     margin: 0;
     min-height: 100vh;
     color: #ffffff;
-    border: 1px dashed green;
+    border: 1px dashed red;
 }
 
 canvas{
