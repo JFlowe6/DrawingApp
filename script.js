@@ -28,15 +28,6 @@ canvas.addEventListener('mousedown', (e)=>{
     drawCircle(x, y);
 });
 
-canvas.addEventListener('ontouchstart', (e)=>{
-    isPressed = true;
-    var scale = elementScale(canvas);
-
-    x = e.offsetX * scale;
-    y = e.offsetY * scale;
-    drawCircle(x, y);
-});
-
 //resets the x and y values when mouse not pressed down
 canvas.addEventListener('mouseup', (e)=>{
     isPressed = false;
@@ -45,35 +36,8 @@ canvas.addEventListener('mouseup', (e)=>{
     y = undefined;
 });
 
-canvas.addEventListener('ontouchend', (e)=>{
-    isPressed = false;
-
-    x = undefined;
-    y = undefined;
-});
-
-canvas.addEventListener('ontouchcancel', (e)=>{
-    isPressed = false;
-
-    x = undefined;
-    y = undefined;
-})
-
 //fills in the space between two points making it seem like a line has been drawn
 canvas.addEventListener('mousemove', (e)=>{
-    if(isPressed){
-        var scale = elementScale(canvas);
-        const x2 = e.offsetX * scale;
-        const y2 = e.offsetY * scale;
-
-        drawCircle(x2, y2);
-        drawLine(x, y, x2, y2);
-        x = x2;
-        y = y2;
-    }
-});
-
-canvas.addEventListener('ontouchmove', (e)=>{
     if(isPressed){
         var scale = elementScale(canvas);
         const x2 = e.offsetX * scale;
@@ -136,3 +100,71 @@ function updateBrushSize(){
 function elementScale(canvas) {
     return canvas.offsetWidth === 0 ? 0 : (canvas.width / canvas.offsetWidth);
 }
+
+// touch event handlers
+canvas.addEventListener('touchstart', process_touchstart, false);
+canvas.addEventListener('touchmove', process_touchmove, false);
+canvas.addEventListener('touchcancel', process_touchcancel, false);
+canvas.addEventListener('touchend', process_touchend, false);
+
+//touchstart handler
+function process_touchstart(e){
+
+    switch(e.touches.length){
+        case 1: handle_one_touch(e); break;
+        case 2: handle_two_touches(e); break;
+        case 3: handle_three_touches(e); break;
+        default: gesture_not_supported(e); break;
+    }
+}
+
+// Create touchstart handler
+canvas.addEventListener('touchstart', function(e) {
+    mousePos = getTouchPos(canvas, e);
+    var touch = e.touches[0];
+    var mouseEvent = new MouseEvent("mousedown", {
+    clientX: touch.clientX,
+    clientY: touch.clientY
+  });canvas.dispatchEvent(mouseEvent);
+}, false);
+
+canvas.addEventListener("touchend", function (e) {
+    var mouseEvent = new MouseEvent("mouseup", {});
+    canvas.dispatchEvent(mouseEvent);
+  }, false);
+
+  canvas.addEventListener("touchmove", function (e) {
+    var touch = e.touches[0];
+    var mouseEvent = new MouseEvent("mousemove", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.dispatchEvent(mouseEvent);
+  }, false);
+
+  // Prevent scrolling when touching the canvas
+canvas.addEventListener("touchstart", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+  canvas.addEventListener("touchend", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+  canvas.addEventListener("touchmove", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+
+// Get the position of the mouse relative to the canvas
+function getMousePos(canvasDom, mouseEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+      x: mouseEvent.clientX - rect.left,
+      y: mouseEvent.clientY - rect.top
+    };
+  }
+  
