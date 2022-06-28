@@ -104,7 +104,10 @@ function elementScale(canvas) {
 // Create touchstart handler
 canvas.addEventListener('touchstart', function(e) {
     mousePos = getTouchPos(canvas, e);
-    var scale = elementScale(canvas);
+    // var scale = elementScale(canvas);
+    // x = (touchEvent.touches[0].clientX - rect.left - rect.right) * scale;
+    // y = (touchEvent.touches[0].clientY - rect.top - rect.bottom) * scale;
+   
     var touch = e.touches[0];
     var mouseEvent = new MouseEvent("mousedown", {
     clientX: touch.clientX * scale,
@@ -148,8 +151,8 @@ document.body.addEventListener("touchstart", function (e) {
 function getMousePos(canvasDom, mouseEvent) {
     var rect = canvasDom.getBoundingClientRect();
     return {
-      x: mouseEvent.clientX - rect.left - rect.right,
-      y: mouseEvent.clientY - rect.top - rect.bottom
+      x: mouseEvent.clientX,
+      y: mouseEvent.clientY
     };
   }
 
@@ -157,8 +160,8 @@ function getMousePos(canvasDom, mouseEvent) {
 function getTouchPos(canvasDom, touchEvent) {
     var rect = canvasDom.getBoundingClientRect();
     return {
-      x: touchEvent.touches[0].clientX - rect.left - rect.right,
-      y: touchEvent.touches[0].clientY - rect.top - rect.bottom
+      x: touchEvent.touches[0].clientX,
+      y: touchEvent.touches[0].clientY
     };
   }
   
