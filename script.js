@@ -28,7 +28,7 @@ canvas.addEventListener('mousedown', (e)=>{
     drawCircle(x, y);
 });
 
-canvas.addEventListener('ontouchend', (e)=>{
+canvas.addEventListener('ontouchstart', (e)=>{
     isPressed = true;
     var scale = elementScale(canvas);
 
@@ -45,12 +45,19 @@ canvas.addEventListener('mouseup', (e)=>{
     y = undefined;
 });
 
-canvas.addEventListener('ontouchstart', (e)=>{
+canvas.addEventListener('ontouchend', (e)=>{
     isPressed = false;
 
     x = undefined;
     y = undefined;
 });
+
+canvas.addEventListener('ontouchcancel', (e)=>{
+    isPressed = false;
+
+    x = undefined;
+    y = undefined;
+})
 
 //fills in the space between two points making it seem like a line has been drawn
 canvas.addEventListener('mousemove', (e)=>{
