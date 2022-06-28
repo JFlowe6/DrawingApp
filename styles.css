@@ -13,7 +13,6 @@ body{
     margin: 0;
     min-height: 100vh;
     color: #ffffff;
-    border: 1px dashed red;
 }
 
 canvas{
@@ -47,4 +46,35 @@ canvas{
 
 .toolbox >*:last-child{
     margin-left: auto;
+}
+
+/* For Mobile */
+@media screen and (max-width: 540px) {
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+    canvas{
+        width: 350px;
+        height: 350px;
+    }
+    .toolbox{
+        width: 350px;
+    }
+}
+
+/* For Tablets */
+@media screen and (min-width: 540px) and (max-width: 780px) {
+    body {
+        width: 100vw;
+        height: 100vh;
+
+    }
+    canvas{
+        width: 450px;
+        height: 450px;
+    }
+    .toolbox{
+        width: 450px;
+    }
 }
