@@ -104,7 +104,7 @@ function elementScale(canvas) {
 // Create touchstart handler
 canvas.addEventListener('touchstart', function(e) {
     mousePos = getTouchPos(canvas, e);
-    // var scale = elementScale(canvas);
+    var scale = elementScale(canvas);
     // x = (touchEvent.touches[0].clientX - rect.left - rect.right) * scale;
     // y = (touchEvent.touches[0].clientY - rect.top - rect.bottom) * scale;
    
