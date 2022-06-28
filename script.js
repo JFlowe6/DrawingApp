@@ -101,23 +101,6 @@ function elementScale(canvas) {
     return canvas.offsetWidth === 0 ? 0 : (canvas.width / canvas.offsetWidth);
 }
 
-// touch event handlers
-canvas.addEventListener('touchstart', process_touchstart, false);
-canvas.addEventListener('touchmove', process_touchmove, false);
-canvas.addEventListener('touchcancel', process_touchcancel, false);
-canvas.addEventListener('touchend', process_touchend, false);
-
-//touchstart handler
-function process_touchstart(e){
-
-    switch(e.touches.length){
-        case 1: handle_one_touch(e); break;
-        case 2: handle_two_touches(e); break;
-        case 3: handle_three_touches(e); break;
-        default: gesture_not_supported(e); break;
-    }
-}
-
 // Create touchstart handler
 canvas.addEventListener('touchstart', function(e) {
     mousePos = getTouchPos(canvas, e);
@@ -143,17 +126,17 @@ canvas.addEventListener("touchend", function (e) {
   }, false);
 
   // Prevent scrolling when touching the canvas
-canvas.addEventListener("touchstart", function (e) {
+document.body.addEventListener("touchstart", function (e) {
     if (e.target == canvas) {
       e.preventDefault();
     }
   }, false);
-  canvas.addEventListener("touchend", function (e) {
+  document.body.addEventListener("touchend", function (e) {
     if (e.target == canvas) {
       e.preventDefault();
     }
   }, false);
-  canvas.addEventListener("touchmove", function (e) {
+  document.body.addEventListener("touchmove", function (e) {
     if (e.target == canvas) {
       e.preventDefault();
     }
@@ -165,6 +148,15 @@ function getMousePos(canvasDom, mouseEvent) {
     return {
       x: mouseEvent.clientX - rect.left,
       y: mouseEvent.clientY - rect.top
+    };
+  }
+
+  // Get the position of a touch relative to the canvas
+function getTouchPos(canvasDom, touchEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+      x: touchEvent.touches[0].clientX - rect.left,
+      y: touchEvent.touches[0].clientY - rect.top
     };
   }
   
