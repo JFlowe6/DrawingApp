@@ -102,7 +102,7 @@ function elementScale(canvas) {
 }
 
 // Create touchstart handler
-canvas.addEventListener('touchstart', function(e) {
+canvas.addEventListener('ontouchstart', function(e) {
     mousePos = getTouchPos(canvas, e);
     var touch = e.touches[0];
     var mouseEvent = new MouseEvent("mousedown", {
@@ -111,12 +111,12 @@ canvas.addEventListener('touchstart', function(e) {
   });canvas.dispatchEvent(mouseEvent);
 }, false);
 
-canvas.addEventListener("touchend", function (e) {
+canvas.addEventListener("ontouchend", function (e) {
     var mouseEvent = new MouseEvent("mouseup", {});
     canvas.dispatchEvent(mouseEvent);
   }, false);
 
-  canvas.addEventListener("touchmove", function (e) {
+  canvas.addEventListener("ontouchmove", function (e) {
     var touch = e.touches[0];
     var mouseEvent = new MouseEvent("mousemove", {
       clientX: touch.clientX,
@@ -126,17 +126,17 @@ canvas.addEventListener("touchend", function (e) {
   }, false);
 
   // Prevent scrolling when touching the canvas
-document.body.addEventListener("touchstart", function (e) {
+document.body.addEventListener("ontouchstart", function (e) {
     if (e.target == canvas) {
       e.preventDefault();
     }
   }, false);
-  document.body.addEventListener("touchend", function (e) {
+  document.body.addEventListener("ontouchend", function (e) {
     if (e.target == canvas) {
       e.preventDefault();
     }
   }, false);
-  document.body.addEventListener("touchmove", function (e) {
+  document.body.addEventListener("ontouchmove", function (e) {
     if (e.target == canvas) {
       e.preventDefault();
     }
