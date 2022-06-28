@@ -148,8 +148,8 @@ document.body.addEventListener("touchstart", function (e) {
 function getMousePos(canvasDom, mouseEvent) {
     var rect = canvasDom.getBoundingClientRect();
     return {
-      x: mouseEvent.clientX - rect.left,
-      y: mouseEvent.clientY - rect.top
+      x: mouseEvent.clientX - rect.left - rect.right,
+      y: mouseEvent.clientY - rect.top - rect.bottom
     };
   }
 
@@ -157,8 +157,8 @@ function getMousePos(canvasDom, mouseEvent) {
 function getTouchPos(canvasDom, touchEvent) {
     var rect = canvasDom.getBoundingClientRect();
     return {
-      x: touchEvent.touches[0].clientX - rect.left,
-      y: touchEvent.touches[0].clientY - rect.top
+      x: touchEvent.touches[0].clientX - rect.left - rect.right,
+      y: touchEvent.touches[0].clientY - rect.top - rect.bottom
     };
   }
   
