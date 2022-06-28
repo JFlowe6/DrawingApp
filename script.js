@@ -104,10 +104,11 @@ function elementScale(canvas) {
 // Create touchstart handler
 canvas.addEventListener('ontouchstart', function(e) {
     mousePos = getTouchPos(canvas, e);
+    var scale = elementScale(canvas);
     var touch = e.touches[0];
     var mouseEvent = new MouseEvent("mousedown", {
-    clientX: touch.clientX,
-    clientY: touch.clientY
+    clientX: touch.clientX * scale,
+    clientY: touch.clientY * scale
   });canvas.dispatchEvent(mouseEvent);
 }, false);
 
@@ -118,9 +119,10 @@ canvas.addEventListener("ontouchend", function (e) {
 
   canvas.addEventListener("ontouchmove", function (e) {
     var touch = e.touches[0];
+    var scale = elementScale(canvas);
     var mouseEvent = new MouseEvent("mousemove", {
-      clientX: touch.clientX,
-      clientY: touch.clientY
+      clientX: touch.clientX * scale,
+      clientY: touch.clientY * scale
     });
     canvas.dispatchEvent(mouseEvent);
   }, false);
