@@ -139,6 +139,8 @@ function updateBrushSize(){
     sizeElem.innerText = size;
 }
 
+//allows to scale the size of the canvas/page 
+//this might be the cause of the issue when it comes to the touch listeners
 function elementScale(canvas) {
     return canvas.offsetWidth === 0 ? 0 : (canvas.width / canvas.offsetWidth);
 }
