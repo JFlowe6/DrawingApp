@@ -50,6 +50,26 @@ canvas.addEventListener('mousemove', (e)=>{
     }
 });
 
+
+
+// Prevent scrolling when touching the canvas
+// document.body.addEventListener("touchstart", function (e) {
+//     if (e.target == canvas) {
+//       e.preventDefault();
+//     }
+//   }, false);
+//   document.body.addEventListener("touchend", function (e) {
+//     if (e.target == canvas) {
+//       e.preventDefault();
+//     }
+//   }, false);
+//   document.body.addEventListener("touchmove", function (e) {
+//     if (e.target == canvas) {
+//       e.preventDefault();
+//     }
+//   }, false);
+
+
 function drawCircle(x,y){
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2);
@@ -101,66 +121,75 @@ function elementScale(canvas) {
     return canvas.offsetWidth === 0 ? 0 : (canvas.width / canvas.offsetWidth);
 }
 
-// Create touchstart handler
-canvas.addEventListener('touchstart', function(e) {
-    mousePos = getTouchPos(canvas, e);
+//touch handler
+
+function touchHandler(e)
+{
+  var touches = e.changedTouches,
+        first = touches[0],
+        type = "";
+    switch(e.type)
+    {
+        case "touchstart": type = "mousedown"; break;
+        case "touchmove":  type = "mousemove"; break;        
+        case "touchend":   type = "mouseup";   break;
+        default:           return;
+    }
+
+    e.preventDefault();
+}
+
+function init() 
+{
+    canvas.addEventListener("touchstart", touchHandler, true);
+    canvas.addEventListener("touchmove", touchHandler, true);
+    canvas.addEventListener("touchend", touchHandler, true);
+    canvas.addEventListener("touchcancel", touchHandler, true);    
+}
+
+// // Create touchstart handler
+// canvas.addEventListener('touchstart', function(e) {
+//     mousePos = getTouchPos(canvas, e);
    
-    var scale = elementScale(canvas);
-    var touch = e.touches[0] * scale;
-    var mouseEvent = new MouseEvent("mousedown", {
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });canvas.dispatchEvent(mouseEvent);
-}, false);
+//     var scale = elementScale(canvas);
+//     var touch = e.touches[0] * scale;
+//     var mouseEvent = new MouseEvent("mousedown", {
+//     clientX: touch.clientX,
+//     clientY: touch.clientY
+//   });canvas.dispatchEvent(mouseEvent);
+// }, false);
 
-canvas.addEventListener("touchend", function (e) {
-    var mouseEvent = new MouseEvent("mouseup", {});
-    canvas.dispatchEvent(mouseEvent);
-  }, false);
+// canvas.addEventListener("touchend", function (e) {
+//     var mouseEvent = new MouseEvent("mouseup", {});
+//     canvas.dispatchEvent(mouseEvent);
+//   }, false);
 
-  canvas.addEventListener("touchmove", function (e) {
-    var scale = elementScale(canvas);
-    var touch = e.touches[0] * scale;
-    var mouseEvent = new MouseEvent("mousemove", {
-      clientX: touch.clientX,
-      clientY: touch.clientY
-    });
-    canvas.dispatchEvent(mouseEvent);
-  }, false);
+//   canvas.addEventListener("touchmove", function (e) {
+//     var scale = elementScale(canvas);
+//     var touch = e.touches[0] * scale;
+//     var mouseEvent = new MouseEvent("mousemove", {
+//       clientX: touch.clientX,
+//       clientY: touch.clientY
+//     });
+//     canvas.dispatchEvent(mouseEvent);
+//   }, false);
 
-  // Prevent scrolling when touching the canvas
-document.body.addEventListener("touchstart", function (e) {
-    if (e.target == canvas) {
-      e.preventDefault();
-    }
-  }, false);
-  document.body.addEventListener("touchend", function (e) {
-    if (e.target == canvas) {
-      e.preventDefault();
-    }
-  }, false);
-  document.body.addEventListener("touchmove", function (e) {
-    if (e.target == canvas) {
-      e.preventDefault();
-    }
-  }, false);
+// // Get the position of the mouse relative to the canvas
+// function getMousePos(canvasDom, mouseEvent) {
+//     var rect = canvasDom.getBoundingClientRect();
+//     return {
+//       x: mouseEvent.clientX - rect.left,
+//       y: mouseEvent.clientY - rect.top
+//     };
+//   }
 
-// Get the position of the mouse relative to the canvas
-function getMousePos(canvasDom, mouseEvent) {
-    var rect = canvasDom.getBoundingClientRect();
-    return {
-      x: mouseEvent.clientX - rect.left,
-      y: mouseEvent.clientY - rect.top
-    };
-  }
-
-  // Get the position of a touch relative to the canvas
-function getTouchPos(canvasDom, touchEvent) {
-    var rect = canvasDom.getBoundingClientRect();
-    var scale = elementScale(canvas);
-    return {
-      x: touchEvent.touches[0].clientX - rect.left,
-      y: touchEvent.touches[0].clientY - rect-top
-    };
-  }
+//   // Get the position of a touch relative to the canvas
+// function getTouchPos(canvasDom, touchEvent) {
+//     var rect = canvasDom.getBoundingClientRect();
+//     var scale = elementScale(canvas);
+//     return {
+//       x: touchEvent.touches[0].clientX - rect.left,
+//       y: touchEvent.touches[0].clientY - rect-top
+//     };
+//   }
   
