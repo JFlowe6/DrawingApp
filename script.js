@@ -13,6 +13,7 @@ let isPressed=false;
 let color='black';
 let x = undefined;
 let y = undefined;
+var mousePos;
 
 //this just sees if the mouse is pressed 
 //which will then cause drawing to be displayed
@@ -20,8 +21,11 @@ canvas.addEventListener('mousedown', (e)=>{
     isPressed = true;
     var scale = elementScale(canvas);
 
-    x = e.offsetX * scale;
-    y = e.offsetY * scale;
+    // x = e.offsetX * scale;
+    // y = e.offsetY * scale;
+    mousePos = getMousePosition(canvas, e);
+    x = mousePos.x * scale;
+    y = mousePos.y * scale;
 
     //This is done so that if the mouse is pressed down and doesn't move 
     //there will still be a dot/circle placed there
@@ -40,8 +44,11 @@ canvas.addEventListener('mouseup', (e)=>{
 canvas.addEventListener('mousemove', (e)=>{
     if(isPressed){
         var scale = elementScale(canvas);
-        const x2 = e.offsetX * scale;
-        const y2 = e.offsetY * scale;
+        // const x2 = e.offsetX * scale;
+        // const y2 = e.offsetY * scale;
+        mousePos = getMousePosition(canvas, e);
+        const x2 = mousePos.x * scale;
+        const y2 = mousePos.y * scale;
 
         drawCircle(x2, y2);
         drawLine(x, y, x2, y2);
