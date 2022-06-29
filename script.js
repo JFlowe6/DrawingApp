@@ -105,7 +105,8 @@ function elementScale(canvas) {
 canvas.addEventListener('touchstart', function(e) {
     mousePos = getTouchPos(canvas, e);
    
-    var touch = e.touches[0];
+    var scale = elementScale(canvas);
+    var touch = e.touches[0] * scale;
     var mouseEvent = new MouseEvent("mousedown", {
     clientX: touch.clientX,
     clientY: touch.clientY
@@ -118,7 +119,8 @@ canvas.addEventListener("touchend", function (e) {
   }, false);
 
   canvas.addEventListener("touchmove", function (e) {
-    var touch = e.touches[0];
+    var scale = elementScale(canvas);
+    var touch = e.touches[0] * scale;
     var mouseEvent = new MouseEvent("mousemove", {
       clientX: touch.clientX,
       clientY: touch.clientY
